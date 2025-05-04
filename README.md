@@ -1,4 +1,4 @@
-# PsiTosta - Website for Psicologa Jaqueline Tosta
+# J. Tosta - Website for Psicologa Jaqueline Tosta
 
 This is a Next.js web application built for Psicologa Jaqueline Tosta, hosted and integrated with Firebase.
 
@@ -28,7 +28,7 @@ This is a Next.js web application built for Psicologa Jaqueline Tosta, hosted an
 1.  **Clone the repository:**
     ```bash
     git clone <repository-url>
-    cd psitosta 
+    cd j-tosta-website # Assuming the repo folder name might change
     ```
 
 2.  **Install dependencies:**

@@ -25,7 +25,7 @@ const Footer = () => {
           </a>
         </div>
         <p className="text-xs">
-          &copy; {currentYear} PsiTosta. Todos os direitos reservados.
+          &copy; {currentYear} J. Tosta. Todos os direitos reservados.
         </p>
          <p className="text-xs mt-1">
           Desenvolvido com ❤️

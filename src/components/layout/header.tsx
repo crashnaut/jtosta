@@ -20,7 +20,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="text-2xl font-bold text-primary">
-          PsiTosta
+          J. Tosta
         </Link>
 
         {/* Desktop Navigation */}
@@ -49,7 +49,7 @@ const Header = () => {
               <div className="flex h-full flex-col">
                  <div className="flex items-center justify-between p-4 border-b">
                     <Link href="/" className="text-xl font-bold text-primary" onClick={() => setIsMobileMenuOpen(false)}>
-                      PsiTosta
+                      J. Tosta
                     </Link>
                     <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                       <X className="h-6 w-6" />
