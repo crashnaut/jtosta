@@ -10,7 +10,7 @@ import WhatsAppButton from "@/components/whatsapp-button";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
-  title: "TostaMente - Psicologia Integrativa",
+  title: "PsiTosta - Psicologia Integrativa",
   description: "Psicoterapeuta Jaqueline Tosta CRP 09/21067. Cuidar da sua mente é o primeiro passo para cuidar de você.",
   keywords: "psicologia, psicoterapia, gestalt-terapia, neuropsicologia, Jaqueline Tosta, Goiânia, terapia integrativa",
 };

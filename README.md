@@ -1,4 +1,4 @@
-# TostaMente - Website for Psicologa Jaqueline Tosta
+# PsiTosta - Website for Psicologa Jaqueline Tosta
 
 This is a Next.js web application built for Psicologa Jaqueline Tosta, hosted and integrated with Firebase.
 
@@ -28,7 +28,7 @@ This is a Next.js web application built for Psicologa Jaqueline Tosta, hosted an
 1.  **Clone the repository:**
     ```bash
     git clone <repository-url>
-    cd tosta-mente
+    cd psitosta 
     ```
 
 2.  **Install dependencies:**
@@ -129,3 +129,5 @@ This will create an optimized production build in the `.next` folder.
 *   **Content:** Update text, images, and links directly in the page components (`src/app/**/*.tsx`).
 *   **WhatsApp Number:** Change the phone number in `src/components/whatsapp-button.tsx` and relevant links.
 *   **Domain:** Update `sitemap.xml` and `robots.txt` generation, and configure the custom domain in Firebase Hosting.
+
+```

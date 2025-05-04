@@ -45,7 +45,7 @@ export default function BlogPage() {
   return (
     <div className="container mx-auto px-4 py-12 md:py-20">
       <h1 className="mb-10 text-center text-4xl font-bold text-primary md:text-5xl">
-        Blog TostaMente
+        Blog PsiTosta
       </h1>
       <p className="mb-12 text-center text-lg text-muted-foreground max-w-2xl mx-auto">
         Reflexões, insights e dicas sobre saúde mental, psicoterapia e bem-estar.
