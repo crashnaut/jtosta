@@ -150,4 +150,22 @@ This will create an optimized production build in the `.next` folder.
     *   Consider using a library like React Hook Form for form management and Firebase Authentication for securing the admin area.
 
 
+## Rollout and Deployment
+
+### Initiating a Rollout
+
+A "rollout" refers to the process of deploying updates to the live version of the website. This ensures that the latest changes are accessible to users. Below are the detailed steps to create and complete a rollout:
+
+#### From VS Code or Similar Environments
+
+**Step 1: Development and Testing**
+
+   -   **Code Updates:** Make necessary changes to the website's codebase, such as fixing bugs, adding new features, or modifying content.
+   -   **Local Testing:** Thoroughly test all changes on your local development server (using `npm run dev` or `yarn dev`) to ensure everything functions as expected.
+   -   **Commit Changes:** Once satisfied, commit the changes to your Git repository using `git commit -m "Your commit message"`.
+
+**Step 2: Building for Production**
+
+   -   **Production Build:** Run the build command to prepare your code for deployment:
+
 ```
