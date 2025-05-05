@@ -5,36 +5,36 @@
 @layer base {
   :root {
     --background: 0 0% 100%; /* White */
-    --foreground: 240 10% 3.9%; /* Dark Gray */
+    --foreground: 30 49% 22%; /* #593E1C */
 
     --card: 0 0% 100%; /* White */
-    --card-foreground: 240 10% 3.9%; /* Dark Gray */
+    --card-foreground: 30 49% 22%; /* #593E1C */
 
     --popover: 0 0% 100%; /* White */
-    --popover-foreground: 240 10% 3.9%; /* Dark Gray */
+    --popover-foreground: 30 49% 22%; /* #593E1C */
 
-    --primary: 202 69% 50%; /* Soft Blue */
-    --primary-foreground: 0 0% 98%; /* Near White */
+    --primary: 36 20% 48%; /* #8E7756 */
+    --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 104 29% 90%; /* Light Green */
-    --secondary-foreground: 104 29% 20%; /* Dark Green */
+    --secondary: 38 29% 84%; /* #D9C8B4 */
+    --secondary-foreground: 30 49% 22%; /* #593E1C */
 
-    --muted: 240 4.8% 95.9%; /* Light Gray */
-    --muted-foreground: 240 3.8% 46.1%; /* Medium Gray */
+    --muted: 38 29% 84%; /* #D9C8B4 */
+    --muted-foreground: 36 20% 48%; /* #8E7756 */
 
-    --accent: 31 65% 70%; /* Muted Orange */
-    --accent-foreground: 31 65% 15%; /* Dark Orange */
+    --accent: 34 16% 44%; /* #8C7961 */
+    --accent-foreground: 0 0% 100%; /* White */
 
     --destructive: 0 84.2% 60.2%; /* Red */
     --destructive-foreground: 0 0% 98%; /* Near White */
 
-    --border: 240 5.9% 90%; /* Light Gray */
-    --input: 240 5.9% 90%; /* Light Gray */
-    --ring: 202 69% 50%; /* Soft Blue */
+    --border: 38 29% 84%; /* #D9C8B4 */
+    --input: 38 29% 84%; /* #D9C8B4 */
+    --ring: 36 20% 48%; /* #8E7756 */
 
     --radius: 0.5rem;
 
-    --chart-1: 12 76% 61%;
+    --chart-1: 30 49% 22%;
     --chart-2: 173 58% 39%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
@@ -51,42 +51,42 @@
   }
 
   .dark {
-    --background: 240 10% 3.9%; /* Dark Gray */
-    --foreground: 0 0% 98%; /* Near White */
+    --background: 30 49% 22%; /* #593E1C */
+    --foreground: 0 0% 100%; /* White */
 
-    --card: 240 10% 3.9%; /* Dark Gray */
-    --card-foreground: 0 0% 98%; /* Near White */
+    --card: 30 49% 22%; /* #593E1C */
+    --card-foreground: 0 0% 100%; /* White */
 
-    --popover: 240 10% 3.9%; /* Dark Gray */
-    --popover-foreground: 0 0% 98%; /* Near White */
+    --popover: 30 49% 22%; /* #593E1C */
+    --popover-foreground: 0 0% 100%; /* White */
 
-    --primary: 202 69% 60%; /* Lighter Soft Blue for dark mode */
-    --primary-foreground: 0 0% 98%; /* Near White */
+    --primary: 36 20% 48%; /* #8E7756 */
+    --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 104 29% 15%; /* Darker Green */
-    --secondary-foreground: 104 29% 85%; /* Lighter Green */
+    --secondary: 38 29% 84%; /* #D9C8B4 */
+    --secondary-foreground: 30 49% 22%; /* #593E1C */
 
-    --muted: 240 3.7% 15.9%; /* Darker Gray */
-    --muted-foreground: 240 5% 64.9%; /* Lighter Medium Gray */
+    --muted: 38 29% 84%; /* #D9C8B4 */
+    --muted-foreground: 36 20% 48%; /* #8E7756 */
 
-    --accent: 31 65% 60%; /* Slightly brighter Muted Orange for dark mode */
-    --accent-foreground: 31 65% 95%; /* Very Light Orange */
+    --accent: 34 16% 44%; /* #8C7961 */
+    --accent-foreground: 0 0% 100%; /* White */
 
-    --destructive: 0 62.8% 30.6%; /* Darker Red */
-    --destructive-foreground: 0 0% 98%; /* Near White */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%; /* White */
 
-    --border: 240 3.7% 15.9%; /* Darker Gray */
-    --input: 240 3.7% 15.9%; /* Darker Gray */
-    --ring: 202 69% 60%; /* Lighter Soft Blue */
+    --border: 30 49% 22%; /* #593E1C */
+    --input: 30 49% 22%; /* #593E1C */
+    --ring: 36 20% 48%; /* #8E7756 */
 
-    --chart-1: 220 70% 50%;
+    --chart-1: 30 49% 22%; /* #593E1C */
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-background: 30 49% 22%; /* #593E1C */
+    --sidebar-foreground: 0 0% 100%; /* White */
     --sidebar-primary: 224.3 76.3% 48%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
