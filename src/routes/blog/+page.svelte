@@ -44,32 +44,32 @@
 	{:else}
 		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 			{#each data.posts as post (post.id)}
-				<article class="group relative flex flex-col space-y-4">
-					<a href="/blog/{post.id}" class="relative aspect-video w-full overflow-hidden rounded-lg">
-						<Image
-							src={post.imageUrl}
-							alt={post.imageHint}
-							className="object-cover transition-transform duration-300 group-hover:scale-105"
-						/>
-					</a>
-					<div class="flex flex-col space-y-2">
-						<h2 class="line-clamp-2 text-xl font-semibold">
-							<a href="/blog/{post.id}" class="hover:text-primary">
+				<a href="/blog/{post.id}" class="group block">
+					<article class="relative flex h-full flex-col rounded-lg border bg-card p-4 shadow-sm transition-all duration-200 hover:shadow-md hover:translate-y-[-2px]">
+						<div class="relative aspect-video w-full overflow-hidden rounded-lg">
+							<Image
+								src={post.imageUrl}
+								alt={post.imageHint}
+								className="object-cover transition-transform duration-300 group-hover:scale-105"
+							/>
+						</div>
+						<div class="flex flex-1 flex-col space-y-2 pt-4">
+							<h2 class="line-clamp-2 text-xl font-semibold text-card-foreground group-hover:text-primary">
 								{post.title}
-							</a>
-						</h2>
-						<p class="line-clamp-2 text-muted-foreground">
-							{post.excerpt}
-						</p>
-						<time class="text-sm text-muted-foreground" datetime={post.date}>
-							{new Date(post.date).toLocaleDateString('pt-BR', {
-								year: 'numeric',
-								month: 'long',
-								day: 'numeric'
-							})}
-						</time>
-					</div>
-				</article>
+							</h2>
+							<p class="line-clamp-2 text-muted-foreground">
+								{post.excerpt}
+							</p>
+							<time class="text-sm text-muted-foreground" datetime={post.date}>
+								{new Date(post.date).toLocaleDateString('pt-BR', {
+									year: 'numeric',
+									month: 'long',
+									day: 'numeric'
+								})}
+							</time>
+						</div>
+					</article>
+				</a>
 			{/each}
 		</div>
 
