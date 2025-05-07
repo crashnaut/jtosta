@@ -1,8 +1,11 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { mdsvex } from 'mdsvex';
+import rehypeUnwrapImages from 'rehype-unwrap-images';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	extensions: ['.svelte', '.md'],
 	kit: {
 		adapter: adapter({
 			pages: 'build',
@@ -15,12 +18,19 @@ const config = {
 			handleMissingId: 'ignore'
 		},
 		alias: {
-			'@': './src',
-			'$components': './src/components',
-			'$lib': './src/lib'
+			$lib: './src/lib'
 		}
 	},
-	preprocess: vitePreprocess()
+	preprocess: [
+		vitePreprocess(),
+		mdsvex({
+			extensions: ['.md'],
+			rehypePlugins: [rehypeUnwrapImages],
+			smartypants: {
+				dashes: 'oldschool'
+			}
+		})
+	]
 };
 
 export default config;

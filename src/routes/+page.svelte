@@ -32,7 +32,7 @@
 				href={whatsappLink}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-lg font-medium text-accent-foreground transition-colors hover:bg-accent/90"
+				class="inline-flex items-center justify-center rounded-md bg-[hsl(var(--whatsapp))] px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-[hsl(var(--whatsapp-hover))]"
 			>
 				Fale comigo no WhatsApp
 			</a>
@@ -138,7 +138,7 @@
 				href={whatsappLink}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center justify-center rounded-md bg-accent px-8 py-3 text-lg font-medium text-accent-foreground transition-colors hover:bg-accent/90"
+				class="inline-flex items-center justify-center rounded-md bg-[hsl(var(--whatsapp))] px-8 py-3 text-lg font-medium text-white transition-colors hover:bg-[hsl(var(--whatsapp-hover))]"
 			>
 				Fale comigo no WhatsApp
 			</a>

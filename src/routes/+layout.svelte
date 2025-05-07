@@ -87,7 +87,7 @@
 
       <!-- Mobile Menu Button -->
       <button
-        class="md:hidden"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md p-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 md:hidden"
         on:click={() => isMobileMenuOpen = !isMobileMenuOpen}
         aria-label={isMobileMenuOpen ? "Fechar Menu" : "Abrir Menu"}
         aria-expanded={isMobileMenuOpen}
@@ -114,12 +114,12 @@
           aria-label="Menu de navegação"
         >
           <!-- Overlay -->
-          <div class="fixed inset-0 bg-black/20" aria-hidden="true"></div>
+          <div class="fixed inset-0 bg-background/80 backdrop-blur-sm" aria-hidden="true"></div>
           
           <!-- Menu Content -->
           <div 
             bind:this={dialogContainer}
-            class="fixed inset-y-0 right-0 w-[250px] bg-background p-6 shadow-lg"
+            class="fixed inset-y-0 right-0 w-[250px] border-l bg-background p-6 shadow-lg transition ease-in-out"
             on:click|stopPropagation={() => {}}
             on:keydown={trapFocus}
             tabindex="0"
@@ -127,24 +127,28 @@
             aria-orientation="vertical"
             aria-label="Menu de navegação"
           >
-            <button
-              class="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-md text-foreground hover:bg-accent hover:text-accent-foreground"
-              on:click={() => (isMobileMenuOpen = false)}
-              aria-label="Fechar menu"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+            <div class="flex items-center justify-between">
+              <a href="/" class="text-xl font-bold text-primary" on:click={() => (isMobileMenuOpen = false)}>
+                J. Tosta
+              </a>
+              <button
+                class="inline-flex h-10 w-10 items-center justify-center rounded-md p-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+                on:click={() => (isMobileMenuOpen = false)}
+                aria-label="Fechar menu"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
 
-            <nav id="mobile-menu" class="mt-8 flex flex-col space-y-6">
+            <nav class="mt-6 flex flex-col space-y-4">
               {#each navItems as item}
                 <a
                   href={item.href}
                   class="text-lg font-medium text-foreground transition-colors hover:text-primary focus:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-ring rounded-md px-2 py-1"
                   class:text-primary={$page.url.pathname === item.href}
-                  role="menuitem"
-                  tabindex="0"
+                  on:click={() => (isMobileMenuOpen = false)}
                 >
                   {item.label}
                 </a>
@@ -197,7 +201,7 @@
   <!-- WhatsApp Button -->
   <a
     href="https://wa.me/5562982653996?text={encodeURIComponent('Olá, Jaqueline! Gostaria de saber mais sobre seus serviços.')}"
-    class="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
+    class="fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[hsl(var(--whatsapp))] text-white shadow-lg transition-transform hover:scale-110 hover:bg-[hsl(var(--whatsapp-hover))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--whatsapp))] focus:ring-offset-2"
     target="_blank"
     rel="noopener noreferrer"
     aria-label="Fale no WhatsApp"

@@ -1,17 +1,15 @@
 import type { PageServerLoad } from './$types';
+import { getBlogPost } from '$lib/blog';
 import { error } from '@sveltejs/kit';
-import { getBlogPost } from '$lib/firebase/blog';
 
 export const load: PageServerLoad = async ({ params }) => {
-	const post = await getBlogPost(params.id);
+    const post = await getBlogPost(params.id);
+    
+    if (!post) {
+        throw error(404, 'Artigo não encontrado');
+    }
 
-	if (!post) {
-		throw error(404, {
-			message: 'Post não encontrado'
-		});
-	}
-
-	return {
-		post
-	};
+    return {
+        post
+    };
 };

@@ -8,9 +8,7 @@
 
 ## Style Guidelines:
 
-- Primary color: Soft, calming blue (#A0D2EB) to evoke a sense of peace and trust.
-- Secondary color: Light, natural green (#BDD7B5) to represent growth and well-being.
-- Accent: Warm, muted orange (#E5B480) for call-to-action buttons and highlights, creating a welcoming feel.
 - Mobile-first approach: Design the layout to be fully responsive and easily accessible on smartphones and tablets.
 - Prioritize clear, readable fonts for body text and headings.
 - Use simple, professional icons for navigation and key features to enhance user experience.
+- Please use the following colours for the colour palette: #D9C8B4 (very light colour), #8E7756, #8C7961 (both medium, warm colours), #593E1C (dark but warm colour, grate for heading and text)

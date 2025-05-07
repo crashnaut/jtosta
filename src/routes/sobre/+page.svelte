@@ -22,8 +22,8 @@
 			/>
 		</div>
 		<div class="md:col-span-2">
-			<h2 class="mb-4 text-3xl font-semibold text-secondary-foreground">Jaqueline Tosta</h2>
-			<p class="mb-2 text-lg font-medium text-muted-foreground">Psicoterapeuta CRP 09/21067</p>
+			<h2 class="mb-4 text-3xl font-semibold text-foreground">Jaqueline Tosta</h2>
+			<p class="mb-2 text-lg font-medium text-foreground">Psicoterapeuta CRP 09/21067</p>
 			<p class="mb-4 text-lg leading-relaxed text-foreground">
 				Sou apaixonada por auxiliar pessoas em suas jornadas de autoconhecimento e transformação.
 				Acredito que cada indivíduo possui um potencial imenso para o crescimento e a superação de
@@ -39,26 +39,26 @@
 	</div>
 
 	<div class="mb-16">
-		<h2 class="mb-8 text-center text-3xl font-semibold text-primary">Formação Acadêmica</h2>
+		<h2 class="mb-8 text-center text-3xl font-semibold text-foreground">Formação Acadêmica</h2>
 		<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			<div class="rounded-lg border bg-card p-6 shadow-sm">
-				<h3 class="mb-2 text-lg font-semibold text-secondary-foreground">
+				<h3 class="mb-2 text-lg font-semibold text-foreground">
 					Graduação em Psicologia
 				</h3>
-				<p class="text-sm text-muted-foreground">
+				<p class="text-sm text-foreground">
 					Base sólida para a compreensão do comportamento humano e das teorias psicológicas.
 				</p>
 			</div>
 
 			<div class="rounded-lg border bg-card p-6 shadow-sm">
-				<h3 class="mb-2 text-lg font-semibold text-secondary-foreground">Graduação em Pedagogia</h3>
-				<p class="text-sm text-muted-foreground">
+				<h3 class="mb-2 text-lg font-semibold text-foreground">Graduação em Pedagogia</h3>
+				<p class="text-sm text-foreground">
 					Entendimento aprofundado sobre processos de aprendizagem e desenvolvimento infantil.
 				</p>
 			</div>
 
 			<div class="rounded-lg border bg-card p-6 shadow-sm">
-				<h3 class="mb-2 text-lg font-semibold text-secondary-foreground">
+				<h3 class="mb-2 text-lg font-semibold text-foreground">
 					Pós-graduação em Neuropsicopedagogia
 				</h3>
 				<p class="text-sm text-muted-foreground">
@@ -67,7 +67,7 @@
 			</div>
 
 			<div class="rounded-lg border bg-card p-6 shadow-sm">
-				<h3 class="mb-2 text-lg font-semibold text-secondary-foreground">
+				<h3 class="mb-2 text-lg font-semibold text-foreground">
 					Pós-graduanda em Neuropsicologia
 				</h3>
 				<p class="text-sm text-muted-foreground">
@@ -76,7 +76,7 @@
 			</div>
 
 			<div class="rounded-lg border bg-card p-6 shadow-sm">
-				<h3 class="mb-2 text-lg font-semibold text-secondary-foreground">
+				<h3 class="mb-2 text-lg font-semibold text-foreground">
 					Pós-graduanda em Gestalt-terapia (ITGT/PUC)
 				</h3>
 				<p class="text-sm text-muted-foreground">
@@ -87,7 +87,7 @@
 	</div>
 
 	<div>
-		<h2 class="mb-8 text-center text-3xl font-semibold text-primary">
+		<h2 class="mb-8 text-center text-3xl font-semibold text-foreground">
 			Minha Abordagem Terapêutica
 		</h2>
 		<div class="grid grid-cols-1 gap-8 md:grid-cols-3">
@@ -97,8 +97,8 @@
 				>
 					<Brain class="h-8 w-8" />
 				</div>
-				<h3 class="mb-2 text-xl font-semibold text-secondary-foreground">Terapia Integrativa</h3>
-				<p class="text-muted-foreground">
+				<h3 class="mb-2 text-xl font-semibold text-foreground">Terapia Integrativa</h3>
+				<p class="text-foreground">
 					Combino técnicas e conhecimentos de diferentes abordagens, como a Gestalt-terapia e a
 					Neuropsicologia, para adaptar o tratamento às suas necessidades específicas, promovendo um
 					cuidado completo e eficaz.
@@ -111,8 +111,8 @@
 				>
 					<Heart class="h-8 w-8" />
 				</div>
-				<h3 class="mb-2 text-xl font-semibold text-secondary-foreground">Acolhimento Emocional</h3>
-				<p class="text-muted-foreground">
+				<h3 class="mb-2 text-xl font-semibold text-foreground">Acolhimento Emocional</h3>
+				<p class="text-foreground">
 					Priorizo a criação de um vínculo terapêutico forte, baseado na empatia, respeito e
 					ausência de julgamentos. Aqui, você encontrará um espaço seguro para expressar seus
 					sentimentos e vulnerabilidades.
@@ -125,8 +125,8 @@
 				>
 					<Users class="h-8 w-8" />
 				</div>
-				<h3 class="mb-2 text-xl font-semibold text-secondary-foreground">Foco no Indivíduo</h3>
-				<p class="text-muted-foreground">
+				<h3 class="mb-2 text-xl font-semibold text-foreground">Foco no Indivíduo</h3>
+				<p class="text-foreground">
 					Cada pessoa é única. Trabalho de forma colaborativa com você, respeitando seu ritmo e sua
 					história, para construirmos juntos caminhos mais saudáveis e conscientes para sua vida.
 				</p>

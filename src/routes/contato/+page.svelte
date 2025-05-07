@@ -31,28 +31,28 @@
 		<!-- WhatsApp Contact Card -->
 		<div class="rounded-lg border bg-card text-card-foreground shadow-md">
 			<div class="flex flex-col space-y-1.5 p-6">
-				<div class="flex items-center gap-2 text-lg font-semibold text-secondary-foreground">
+				<div class="flex items-center gap-2 text-lg font-semibold text-foreground">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						viewBox={WhatsAppIcon.svg.viewBox}
-						class="h-5 w-5"
+						class="h-5 w-5 text-[hsl(var(--whatsapp))]"
 					>
 						<path fill="currentColor" d={WhatsAppIcon.svg.path} />
 					</svg>
 					WhatsApp
 				</div>
-				<p class="text-sm text-muted-foreground">
+				<p class="text-sm text-foreground">
 					A forma mais rápida e direta de falar comigo. Clique no botão abaixo para iniciar uma
 					conversa.
 				</p>
 			</div>
 			<div class="p-6 pt-0">
-				<p class="mb-4 flex items-center text-muted-foreground">
+				<p class="mb-4 flex items-center text-foreground">
 					<Phone class="mr-2 h-4 w-4" /> (62) 98265-3996
 				</p>
 				<a
 					href={whatsappLink}
-					class="inline-flex w-full items-center justify-center rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-colors hover:bg-accent/90"
+					class="inline-flex w-full items-center justify-center rounded-md bg-[hsl(var(--whatsapp))] px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-[hsl(var(--whatsapp-hover))]"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
@@ -71,10 +71,10 @@
 		<!-- Email Form Card -->
 		<div class="rounded-lg border bg-card text-card-foreground shadow-md">
 			<div class="flex flex-col space-y-1.5 p-6">
-				<div class="flex items-center gap-2 text-lg font-semibold text-secondary-foreground">
+				<div class="flex items-center gap-2 text-lg font-semibold text-foreground">
 					<Mail class="h-5 w-5" /> Formulário por Email
 				</div>
-				<p class="text-sm text-muted-foreground">
+				<p class="text-sm text-foreground">
 					Prefere enviar um email? Preencha o formulário abaixo (disponível para usuários logados).
 				</p>
 			</div>

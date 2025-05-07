@@ -9,5 +9,8 @@ export default defineConfig({
 	},
 	ssr: {
 		noExternal: ['lucide-svelte']
+	},
+	optimizeDeps: {
+		include: ['mdsvex']
 	}
 });

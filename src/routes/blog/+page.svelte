@@ -1,107 +1,98 @@
 <script lang="ts">
-	import { MessageCircle, ChevronLeft, ChevronRight } from 'lucide-svelte';
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
+	import Image from '$lib/components/image.svelte';
 	import LoadingSpinner from '$lib/components/loading-spinner.svelte';
-	import SEO from '$lib/components/seo.svelte';
+	import type { BlogPost } from '$lib/types/blog';
+	import type { PageData } from './$types';
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	export let data: PageData;
+	let isLoading = false;
 
-	// TODO: Implement authentication check later for comments
-	const isAuthenticated = false;
+	async function handlePageChange(newPage: number) {
+		if (!browser || isLoading) return;
+		isLoading = true;
+		
+		const params = new URLSearchParams();
+		params.set('page', newPage.toString());
+		
+		await goto(`/blog?${params.toString()}`, {
+			invalidateAll: true
+		});
+		
+		isLoading = false;
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
 </script>
 
-<SEO
-	title="Blog - J. Tosta | Reflexões sobre Saúde Mental e Bem-estar"
-	description="Artigos e reflexões sobre psicologia, saúde mental, terapia e desenvolvimento pessoal por Jaqueline Tosta."
-/>
+<svelte:head>
+	<title>Blog | J. Tosta</title>
+	<meta name="description" content="Artigos sobre psicologia, saúde mental e desenvolvimento pessoal por Jaqueline Tosta." />
+</svelte:head>
 
-{#if !data}
-	<div class="container mx-auto flex min-h-[50vh] items-center justify-center px-4">
-		<LoadingSpinner size="lg" />
-	</div>
-{:else}
-	<div class="container mx-auto px-4 py-12 md:py-20">
-		<h1 class="mb-10 text-center text-4xl font-bold text-primary md:text-5xl">Blog J. Tosta</h1>
-		<p class="mb-12 text-center text-lg text-muted-foreground max-w-2xl mx-auto">
-			Reflexões, insights e dicas sobre saúde mental, psicoterapia e bem-estar.
-		</p>
+<div class="container mx-auto px-4 py-8">
+	<h1 class="mb-8 text-4xl font-bold">Blog</h1>
 
-		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+	{#if isLoading}
+		<div class="flex h-[400px] items-center justify-center">
+			<LoadingSpinner size="lg" />
+		</div>
+	{:else if data.posts.length === 0}
+		<div class="flex h-[400px] flex-col items-center justify-center space-y-4">
+			<p class="text-lg text-muted-foreground">Nenhum artigo encontrado.</p>
+		</div>
+	{:else}
+		<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 			{#each data.posts as post (post.id)}
-				<div
-					class="flex flex-col overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md hover:shadow-lg transition-shadow duration-300"
-				>
-					<div class="p-0">
-						<img
+				<article class="group relative flex flex-col space-y-4">
+					<a href="/blog/{post.id}" class="relative aspect-video w-full overflow-hidden rounded-lg">
+						<Image
 							src={post.imageUrl}
-							alt={post.title}
-							class="aspect-[3/2] w-full object-cover"
-							data-ai-hint={post.imageHint}
+							alt={post.imageHint}
+							className="object-cover transition-transform duration-300 group-hover:scale-105"
 						/>
-					</div>
-					<div class="flex-1 p-6">
-						<h2 class="mb-2 text-xl leading-tight">
-							<a href={`/blog/${post.id}`} class="hover:text-primary transition-colors">
+					</a>
+					<div class="flex flex-col space-y-2">
+						<h2 class="line-clamp-2 text-xl font-semibold">
+							<a href="/blog/{post.id}" class="hover:text-primary">
 								{post.title}
 							</a>
 						</h2>
-						<p class="mb-4 text-sm line-clamp-3 text-muted-foreground">
+						<p class="line-clamp-2 text-muted-foreground">
 							{post.excerpt}
 						</p>
-						<div class="flex items-center text-xs text-muted-foreground">
-							<div
-								class="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-muted-foreground mr-2"
-							>
-								{post.author[0]}
-							</div>
-							<span>{post.author} &middot; {post.date}</span>
-						</div>
+						<time class="text-sm text-muted-foreground" datetime={post.date}>
+							{new Date(post.date).toLocaleDateString('pt-BR', {
+								year: 'numeric',
+								month: 'long',
+								day: 'numeric'
+							})}
+						</time>
 					</div>
-					<div class="flex justify-between items-center p-6 pt-0">
-						<a href={`/blog/${post.id}`} class="text-sm text-primary hover:underline"> Ler mais </a>
-						<div class="flex items-center text-sm text-muted-foreground">
-							<MessageCircle class="h-4 w-4 mr-1" />
-							{post.commentsCount}
-						</div>
-					</div>
-				</div>
+				</article>
 			{/each}
 		</div>
 
-		{#if data.pagination.totalPages > 1}
-			<div class="mt-12 flex justify-center items-center space-x-4">
-				<a
-					href={`/blog?page=${data.pagination.page - 1}`}
-					class="inline-flex items-center justify-center rounded-md border border-input bg-background p-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-					class:pointer-events-none={!data.pagination.hasPrevPage}
-					class:opacity-50={!data.pagination.hasPrevPage}
-					aria-disabled={!data.pagination.hasPrevPage}
+		<!-- Pagination -->
+		<div class="mt-8 flex items-center justify-center space-x-4">
+			{#if data.pagination.hasPrevPage}
+				<button
+					class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+					on:click={() => handlePageChange(data.pagination.page - 1)}
+					disabled={isLoading}
 				>
-					<ChevronLeft class="h-4 w-4" />
-					<span class="sr-only">Página Anterior</span>
-				</a>
-
-				<span class="text-sm text-muted-foreground">
-					Página {data.pagination.page} de {data.pagination.totalPages}
-				</span>
-
-				<a
-					href={`/blog?page=${data.pagination.page + 1}`}
-					class="inline-flex items-center justify-center rounded-md border border-input bg-background p-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground"
-					class:pointer-events-none={!data.pagination.hasNextPage}
-					class:opacity-50={!data.pagination.hasNextPage}
-					aria-disabled={!data.pagination.hasNextPage}
+					Anterior
+				</button>
+			{/if}
+			{#if data.pagination.hasNextPage}
+				<button
+					class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+					on:click={() => handlePageChange(data.pagination.page + 1)}
+					disabled={isLoading}
 				>
-					<ChevronRight class="h-4 w-4" />
-					<span class="sr-only">Próxima Página</span>
-				</a>
-			</div>
-		{/if}
-
-		{#if !isAuthenticated}
-			<div class="mt-16 text-center text-muted-foreground">
-				<p>Faça login para deixar comentários nos artigos.</p>
-			</div>
-		{/if}
-	</div>
-{/if}
+					Próxima
+				</button>
+			{/if}
+		</div>
+	{/if}
+</div>
