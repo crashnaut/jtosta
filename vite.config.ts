@@ -7,9 +7,12 @@ export default defineConfig({
 		port: 3000,
 		host: true
 	},
-	ssr: {
-		noExternal: ['lucide-svelte']
+	resolve: {
+		alias: {
+			$content: '/src/content'
+		}
 	},
+	assetsInclude: ['**/*.md'],
 	optimizeDeps: {
 		include: ['mdsvex']
 	}

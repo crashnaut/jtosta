@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dev } from '$app/environment';
 	import { page } from '$app/stores';
 </script>
 
@@ -9,13 +10,19 @@
 		{$page.status}: {$page.error?.message || 'Página não encontrada'}
 	</h1>
 
-	<p class="mb-8 text-lg text-muted-foreground">
-		{#if $page.status === 404}
-			Desculpe, mas a página que você está procurando não existe.
-		{:else}
-			Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.
-		{/if}
-	</p>
+	{#if dev && $page.error?.stack}
+		<pre class="mb-8 max-w-2xl overflow-x-auto rounded bg-muted p-4 text-left text-sm text-muted-foreground">
+			{$page.error.stack}
+		</pre>
+	{:else}
+		<p class="mb-8 text-lg text-muted-foreground">
+			{#if $page.status === 404}
+				Desculpe, mas a página que você está procurando não existe.
+			{:else}
+				Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.
+			{/if}
+		</p>
+	{/if}
 
 	<a
 		href="/"

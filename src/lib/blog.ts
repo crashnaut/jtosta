@@ -1,39 +1,54 @@
+import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { dev } from '$app/environment';
 import type { BlogPost, BlogPostsResult } from './types/blog';
 
 const POSTS_PER_PAGE = 6;
 
-interface MarkdownPost {
-    metadata: {
-        title: string;
-        excerpt: string;
-        author: string;
-        date: string;
-        imageUrl: string;
-        imageHint: string;
-    };
-    default: {
-        render(): { html: string };
-    };
-}
-
-export type { BlogPost, BlogPostsResult };
-
 export async function getBlogPosts(page = 1): Promise<BlogPostsResult> {
     try {
-        const posts = Object.entries(import.meta.glob<MarkdownPost>('/src/content/blog/*.md', { eager: true }))
-            .map(([path, post]) => {
-                const id = path.split('/').pop()?.replace('.md', '');
-                if (!id) throw new Error(`Invalid post path: ${path}`);
+        console.log('Fetching blog posts...');
+        const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
+        const filenames = readdirSync(postsDirectory);
+        
+        console.log('Found files:', filenames);
+
+        const posts = filenames
+            .filter(filename => filename.endsWith('.md'))
+            .map(filename => {
+                const filePath = join(postsDirectory, filename);
+                const fileContent = readFileSync(filePath, 'utf-8');
+                const id = filename.replace('.md', '');
                 
+                // Parse frontmatter
+                const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---/);
+                if (!frontmatterMatch) {
+                    throw new Error(`Invalid frontmatter in ${filename}`);
+                }
+                
+                const frontmatter = frontmatterMatch[1]
+                    .split('\n')
+                    .reduce((acc, line) => {
+                        const [key, ...valueParts] = line.split(':');
+                        if (key && valueParts.length > 0) {
+                            const value = valueParts.join(':').trim();
+                            acc[key.trim()] = value.replace(/^"(.*)"$/, '$1');
+                        }
+                        return acc;
+                    }, {} as Record<string, string>);
+
+                // Get content (everything after frontmatter)
+                const content = fileContent.slice(frontmatterMatch[0].length).trim();
+
                 return {
                     id,
-                    title: post.metadata.title,
-                    excerpt: post.metadata.excerpt,
-                    author: post.metadata.author,
-                    date: post.metadata.date,
-                    imageUrl: post.metadata.imageUrl,
-                    imageHint: post.metadata.imageHint,
-                    content: post.default.render().html
+                    title: frontmatter.title,
+                    excerpt: frontmatter.excerpt,
+                    author: frontmatter.author,
+                    date: frontmatter.date,
+                    imageUrl: frontmatter.imageUrl,
+                    imageHint: frontmatter.imageHint,
+                    content
                 };
             })
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -41,41 +56,60 @@ export async function getBlogPosts(page = 1): Promise<BlogPostsResult> {
         const start = (page - 1) * POSTS_PER_PAGE;
         const end = start + POSTS_PER_PAGE;
         const paginatedPosts = posts.slice(start, end);
-        const hasMore = posts.length > end;
-
+        
         return {
             posts: paginatedPosts,
-            hasMore
+            hasMore: posts.length > end
         };
     } catch (error) {
-        console.error('Error fetching blog posts:', error);
-        throw new Error('Failed to fetch blog posts. Please try again later.');
+        console.error('Error in getBlogPosts:', error);
+        throw error;
     }
 }
 
 export async function getBlogPost(id: string): Promise<BlogPost | null> {
     try {
-        const posts = Object.entries(import.meta.glob<MarkdownPost>('/src/content/blog/*.md', { eager: true }));
-        const postEntry = posts.find(([path]) => path.includes(`${id}.md`));
+        const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
+        const filePath = join(postsDirectory, `${id}.md`);
         
-        if (!postEntry) {
+        try {
+            const fileContent = readFileSync(filePath, 'utf-8');
+            
+            // Parse frontmatter
+            const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---/);
+            if (!frontmatterMatch) {
+                throw new Error(`Invalid frontmatter in ${id}.md`);
+            }
+            
+            const frontmatter = frontmatterMatch[1]
+                .split('\n')
+                .reduce((acc, line) => {
+                    const [key, ...valueParts] = line.split(':');
+                    if (key && valueParts.length > 0) {
+                        const value = valueParts.join(':').trim();
+                        acc[key.trim()] = value.replace(/^"(.*)"$/, '$1');
+                    }
+                    return acc;
+                }, {} as Record<string, string>);
+
+            // Get content (everything after frontmatter)
+            const content = fileContent.slice(frontmatterMatch[0].length).trim();
+            
+            return {
+                id,
+                title: frontmatter.title,
+                excerpt: frontmatter.excerpt,
+                author: frontmatter.author,
+                date: frontmatter.date,
+                imageUrl: frontmatter.imageUrl,
+                imageHint: frontmatter.imageHint,
+                content
+            };
+        } catch (e) {
             return null;
         }
-
-        const [, post] = postEntry;
-
-        return {
-            id,
-            title: post.metadata.title,
-            excerpt: post.metadata.excerpt,
-            author: post.metadata.author,
-            date: post.metadata.date,
-            imageUrl: post.metadata.imageUrl,
-            imageHint: post.metadata.imageHint,
-            content: post.default.render().html
-        };
     } catch (error) {
-        console.error('Error fetching blog post:', error);
-        throw new Error('Failed to fetch blog post. Please try again later.');
+        console.error('Error in getBlogPost:', error);
+        throw error;
     }
 }

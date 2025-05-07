@@ -14,11 +14,11 @@ const config = {
 			precompress: true,
 			strict: true
 		}),
-		prerender: {
-			handleMissingId: 'ignore'
-		},
 		alias: {
 			$lib: './src/lib'
+		},
+		prerender: {
+			handleMissingId: 'ignore'
 		}
 	},
 	preprocess: [
