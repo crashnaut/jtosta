@@ -8,6 +8,26 @@ const POSTS_PER_PAGE = 6;
 // Cache for parsed blog posts to improve performance
 const postsCache = new Map<string, BlogPost>();
 
+// Get the correct content directory path
+function getContentDirectory() {
+    const paths = [
+        join(process.cwd(), 'src/content/blog'),
+        join(process.cwd(), 'build/content/blog'),
+        join(process.cwd(), 'content/blog')
+    ];
+    
+    for (const path of paths) {
+        try {
+            readdirSync(path);
+            return path;
+        } catch (e) {
+            continue;
+        }
+    }
+    
+    throw new Error('Blog content directory not found');
+}
+
 function parseFrontmatter(content: string): Record<string, string> {
     const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
     if (!frontmatterMatch) {
@@ -45,7 +65,7 @@ function parsePost(filename: string, fileContent: string): BlogPost {
 
 export async function getAllBlogPostIds(): Promise<string[]> {
     try {
-        const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
+        const postsDirectory = getContentDirectory();
         return readdirSync(postsDirectory)
             .filter(filename => filename.endsWith('.md'))
             .map(filename => filename.replace('.md', ''));
@@ -57,7 +77,7 @@ export async function getAllBlogPostIds(): Promise<string[]> {
 
 export async function getBlogPosts(page = 1): Promise<BlogPostsResult> {
     try {
-        const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
+        const postsDirectory = getContentDirectory();
         const filenames = readdirSync(postsDirectory)
             .filter(filename => filename.endsWith('.md'));
 
@@ -89,7 +109,7 @@ export async function getBlogPosts(page = 1): Promise<BlogPostsResult> {
 
 export async function getBlogPost(id: string): Promise<BlogPost | null> {
     try {
-        const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
+        const postsDirectory = getContentDirectory();
         const filePath = join(postsDirectory, `${id}.md`);
         
         try {
