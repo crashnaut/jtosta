@@ -1,15 +1,12 @@
 <script lang="ts">
   import '../app.css';
-  import '@fontsource/inter/400.css';
-  import '@fontsource/inter/500.css';
-  import '@fontsource/inter/600.css';
-  import '@fontsource/inter/700.css';
+  import '@fontsource-variable/inter';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
-  
+
   let isMobileMenuOpen = false;
   let dialogContainer: HTMLDivElement;
-  
+
   const navItems = [
     { href: "/", label: "Início" },
     { href: "/sobre", label: "Sobre" },
@@ -62,6 +59,14 @@
   });
 </script>
 
+<svelte:head>
+  <style>
+    :root {
+      --font-sans: 'Inter Variable', sans-serif;
+    }
+  </style>
+</svelte:head>
+
 <svelte:window on:keydown={handleKeyDown} />
 
 <div class="relative flex min-h-screen flex-col">
@@ -101,64 +106,64 @@
           {/if}
         </svg>
       </button>
-
-      <!-- Mobile Menu -->
-      {#if isMobileMenuOpen}
-        <div 
-          class="fixed inset-0 z-50 md:hidden" 
-          on:click={handleOverlayClick}
-          on:keydown={handleKeyDown}
-          role="dialog"
-          tabindex="-1"
-          aria-modal="true"
-          aria-label="Menu de navegação"
-        >
-          <!-- Overlay -->
-          <div class="fixed inset-0 bg-background/80 backdrop-blur-sm" aria-hidden="true"></div>
-          
-          <!-- Menu Content -->
-          <div 
-            bind:this={dialogContainer}
-            class="fixed inset-y-0 right-0 w-[250px] border-l bg-background p-6 shadow-lg transition ease-in-out"
-            on:click|stopPropagation={() => {}}
-            on:keydown={trapFocus}
-            tabindex="0"
-            role="menu"
-            aria-orientation="vertical"
-            aria-label="Menu de navegação"
-          >
-            <div class="flex items-center justify-between">
-              <a href="/" class="text-xl font-bold text-primary" on:click={() => (isMobileMenuOpen = false)}>
-                J. Tosta
-              </a>
-              <button
-                class="inline-flex h-10 w-10 items-center justify-center rounded-md p-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
-                on:click={() => (isMobileMenuOpen = false)}
-                aria-label="Fechar menu"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            <nav class="mt-6 flex flex-col space-y-4">
-              {#each navItems as item}
-                <a
-                  href={item.href}
-                  class="text-lg font-medium text-foreground transition-colors hover:text-primary focus:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-ring rounded-md px-2 py-1"
-                  class:text-primary={$page.url.pathname === item.href}
-                  on:click={() => (isMobileMenuOpen = false)}
-                >
-                  {item.label}
-                </a>
-              {/each}
-            </nav>
-          </div>
-        </div>
-      {/if}
     </div>
   </header>
+
+  <!-- Mobile Menu -->
+  {#if isMobileMenuOpen}
+    <div 
+      class="fixed inset-0 z-50 md:hidden" 
+      on:click={handleOverlayClick}
+      on:keydown={handleKeyDown}
+      role="dialog"
+      tabindex="-1"
+      aria-modal="true"
+      aria-label="Menu de navegação"
+    >
+      <!-- Overlay -->
+      <div class="fixed inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true"></div>
+
+      <!-- Menu Content -->
+      <div 
+        bind:this={dialogContainer}
+        class="fixed inset-y-0 right-0 w-[250px] border-l bg-white p-6 shadow-lg transition ease-in-out dark:bg-white"
+        on:click|stopPropagation={() => {}}
+        on:keydown={trapFocus}
+        tabindex="0"
+        role="menu"
+        aria-orientation="vertical"
+        aria-label="Menu de navegação"
+      >
+        <div class="flex items-center justify-between">
+          <a href="/" class="text-xl font-bold text-primary" on:click={() => (isMobileMenuOpen = false)}>
+            J. Tosta
+          </a>
+          <button
+            class="inline-flex h-10 w-10 items-center justify-center rounded-md p-2.5 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50"
+            on:click={() => (isMobileMenuOpen = false)}
+            aria-label="Fechar menu"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav class="mt-6 flex flex-col space-y-4">
+          {#each navItems as item}
+            <a
+              href={item.href}
+              class="text-lg font-medium text-foreground transition-colors hover:text-primary focus:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-ring rounded-md px-2 py-1"
+              class:text-primary={$page.url.pathname === item.href}
+              on:click={() => (isMobileMenuOpen = false)}
+            >
+              {item.label}
+            </a>
+          {/each}
+        </nav>
+      </div>
+    </div>
+  {/if}
 
   <!-- Main Content -->
   <main class="flex-1">
@@ -218,3 +223,4 @@
     </svg>
   </a>
 </div>
+

@@ -31,7 +31,7 @@
 </svelte:head>
 
 <div class="container mx-auto px-4 py-8">
-	<h1 class="mb-8 text-4xl font-bold">Blog</h1>
+	<h1 class="mb-8 text-4xl font-bold">Blog J. Tosta</h1>
 
 	{#if isLoading}
 		<div class="flex h-[400px] items-center justify-center">
