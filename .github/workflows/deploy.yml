@@ -28,7 +28,7 @@ jobs:
         with:
           workload_identity_provider: projects/603102018157/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider
           service_account: github-deploy@tostamente.iam.gserviceaccount.com
-          token_format: 'access_token'
+          audience: https://token.actions.githubusercontent.com
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
