@@ -1,9 +1,11 @@
 {
-  "projects": {},
+  "projects": {
+    "default": "tostamente"
+  },
   "targets": {
     "tostamente": {
       "hosting": {
-        "jtosta": [
+        "jtosta-com": [
           "jtosta-com"
         ]
       }
