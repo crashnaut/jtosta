@@ -2,33 +2,14 @@ import type { PageServerLoad } from './$types';
 import { getBlogPosts } from '$lib/blog';
 import { error } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ url }) => {
-    try {
-        console.log('Starting blog page load...');
-        const page = Number(url.searchParams.get('page')) || 1;
-        console.log('Loading page:', page);
+export const prerender = true;
 
-        try {
-            const { posts, hasMore } = await getBlogPosts(page);
-            console.log('Successfully loaded posts:', posts.length);
-            
-            return {
-                posts,
-                pagination: {
-                    page,
-                    hasNextPage: hasMore,
-                    hasPrevPage: page > 1
-                }
-            };
-        } catch (e) {
-            console.error('Error during getBlogPosts:', e);
-            throw e;
-        }
+export const load = (async ({ url }) => {
+    try {
+        const page = 1;  // Always use page 1 for prerendering
+        const { posts, hasMore } = await getBlogPosts(page);
+        return { posts, pagination: { page, hasNextPage: hasMore, hasPrevPage: false } };
     } catch (e) {
-        console.error('Server load error:', e);
-        throw error(500, {
-            message: e instanceof Error ? e.message : 'Failed to load blog posts',
-            code: 'BLOG_LOAD_ERROR'
-        });
+        throw error(500, 'Failed to load blog posts');
     }
-};
+}) satisfies PageServerLoad;

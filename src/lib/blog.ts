@@ -5,60 +5,80 @@ import type { BlogPost, BlogPostsResult } from './types/blog';
 
 const POSTS_PER_PAGE = 6;
 
+// Cache for parsed blog posts to improve performance
+const postsCache = new Map<string, BlogPost>();
+
+function parseFrontmatter(content: string): Record<string, string> {
+    const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/);
+    if (!frontmatterMatch) {
+        throw new Error('Invalid frontmatter');
+    }
+    
+    return frontmatterMatch[1]
+        .split('\n')
+        .reduce((acc, line) => {
+            const [key, ...valueParts] = line.split(':');
+            if (key && valueParts.length > 0) {
+                const value = valueParts.join(':').trim();
+                acc[key.trim()] = value.replace(/^"(.*)"$/, '$1');
+            }
+            return acc;
+        }, {} as Record<string, string>);
+}
+
+function parsePost(filename: string, fileContent: string): BlogPost {
+    const id = filename.replace('.md', '');
+    const frontmatter = parseFrontmatter(fileContent);
+    const content = fileContent.slice(fileContent.indexOf('---\n', 4) + 4).trim();
+    
+    return {
+        id,
+        title: frontmatter.title,
+        excerpt: frontmatter.excerpt,
+        author: frontmatter.author,
+        date: frontmatter.date,
+        imageUrl: frontmatter.imageUrl,
+        imageHint: frontmatter.imageHint,
+        content
+    };
+}
+
+export async function getAllBlogPostIds(): Promise<string[]> {
+    try {
+        const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
+        return readdirSync(postsDirectory)
+            .filter(filename => filename.endsWith('.md'))
+            .map(filename => filename.replace('.md', ''));
+    } catch (error) {
+        console.error('Error in getAllBlogPostIds:', error);
+        return [];
+    }
+}
+
 export async function getBlogPosts(page = 1): Promise<BlogPostsResult> {
     try {
-        console.log('Fetching blog posts...');
         const postsDirectory = join(process.cwd(), dev ? 'src/content/blog' : 'build/content/blog');
-        const filenames = readdirSync(postsDirectory);
-        
-        console.log('Found files:', filenames);
+        const filenames = readdirSync(postsDirectory)
+            .filter(filename => filename.endsWith('.md'));
 
-        const posts = filenames
-            .filter(filename => filename.endsWith('.md'))
-            .map(filename => {
-                const filePath = join(postsDirectory, filename);
-                const fileContent = readFileSync(filePath, 'utf-8');
-                const id = filename.replace('.md', '');
-                
-                // Parse frontmatter
-                const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---/);
-                if (!frontmatterMatch) {
-                    throw new Error(`Invalid frontmatter in ${filename}`);
-                }
-                
-                const frontmatter = frontmatterMatch[1]
-                    .split('\n')
-                    .reduce((acc, line) => {
-                        const [key, ...valueParts] = line.split(':');
-                        if (key && valueParts.length > 0) {
-                            const value = valueParts.join(':').trim();
-                            acc[key.trim()] = value.replace(/^"(.*)"$/, '$1');
-                        }
-                        return acc;
-                    }, {} as Record<string, string>);
+        const posts = filenames.map(filename => {
+            if (postsCache.has(filename)) {
+                return postsCache.get(filename)!;
+            }
 
-                // Get content (everything after frontmatter)
-                const content = fileContent.slice(frontmatterMatch[0].length).trim();
-
-                return {
-                    id,
-                    title: frontmatter.title,
-                    excerpt: frontmatter.excerpt,
-                    author: frontmatter.author,
-                    date: frontmatter.date,
-                    imageUrl: frontmatter.imageUrl,
-                    imageHint: frontmatter.imageHint,
-                    content
-                };
-            })
-            .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            const filePath = join(postsDirectory, filename);
+            const fileContent = readFileSync(filePath, 'utf-8');
+            const post = parsePost(filename, fileContent);
+            postsCache.set(filename, post);
+            return post;
+        })
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
         const start = (page - 1) * POSTS_PER_PAGE;
         const end = start + POSTS_PER_PAGE;
-        const paginatedPosts = posts.slice(start, end);
         
         return {
-            posts: paginatedPosts,
+            posts: posts.slice(start, end),
             hasMore: posts.length > end
         };
     } catch (error) {
@@ -73,38 +93,14 @@ export async function getBlogPost(id: string): Promise<BlogPost | null> {
         const filePath = join(postsDirectory, `${id}.md`);
         
         try {
-            const fileContent = readFileSync(filePath, 'utf-8');
-            
-            // Parse frontmatter
-            const frontmatterMatch = fileContent.match(/^---\n([\s\S]*?)\n---/);
-            if (!frontmatterMatch) {
-                throw new Error(`Invalid frontmatter in ${id}.md`);
+            if (postsCache.has(`${id}.md`)) {
+                return postsCache.get(`${id}.md`)!;
             }
-            
-            const frontmatter = frontmatterMatch[1]
-                .split('\n')
-                .reduce((acc, line) => {
-                    const [key, ...valueParts] = line.split(':');
-                    if (key && valueParts.length > 0) {
-                        const value = valueParts.join(':').trim();
-                        acc[key.trim()] = value.replace(/^"(.*)"$/, '$1');
-                    }
-                    return acc;
-                }, {} as Record<string, string>);
 
-            // Get content (everything after frontmatter)
-            const content = fileContent.slice(frontmatterMatch[0].length).trim();
-            
-            return {
-                id,
-                title: frontmatter.title,
-                excerpt: frontmatter.excerpt,
-                author: frontmatter.author,
-                date: frontmatter.date,
-                imageUrl: frontmatter.imageUrl,
-                imageHint: frontmatter.imageHint,
-                content
-            };
+            const fileContent = readFileSync(filePath, 'utf-8');
+            const post = parsePost(`${id}.md`, fileContent);
+            postsCache.set(`${id}.md`, post);
+            return post;
         } catch (e) {
             return null;
         }

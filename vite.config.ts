@@ -5,7 +5,10 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
 		port: 3000,
-		host: true
+		host: true,
+		fs: {
+			allow: ['..']
+		}
 	},
 	resolve: {
 		alias: {
@@ -15,5 +18,8 @@ export default defineConfig({
 	assetsInclude: ['**/*.md'],
 	optimizeDeps: {
 		include: ['mdsvex']
+	},
+	build: {
+		target: 'esnext'
 	}
 });

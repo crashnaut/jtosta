@@ -3,14 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-	apiKey: import.meta.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-	authDomain: import.meta.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-	projectId: import.meta.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-	storageBucket: import.meta.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-	messagingSenderId: import.meta.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-	appId: import.meta.env.NEXT_PUBLIC_FIREBASE_APP_ID
+	apiKey: "AIzaSyDS-i6M1SBFHqodsulJ0IYeUn3OYODlHRA",
+	authDomain: "tostamente.firebaseapp.com",
+	projectId: "tostamente",
+	storageBucket: "tostamente.firebasestorage.app",
+	messagingSenderId: "603102018157",
+	appId: "1:603102018157:web:3fe1f03c4ccd61ed935d64"
 };
 
 // Initialize Firebase
