@@ -15,9 +15,11 @@
 	<div class="mb-16 grid grid-cols-1 items-center gap-12 md:grid-cols-3">
 		<div class="md:col-span-1">
 			<img
-				src="https://picsum.photos/500/500"
+				src="/photos/DSC08914.jpg"
+				width="500"
+				height="30"
+				class="mx-auto rounded-lg shadow-xl object-cover object-[center_45%]"
 				alt="Psicoterapeuta Jaqueline Tosta"
-				class="mx-auto rounded-lg shadow-xl"
 				data-ai-hint="professional woman smiling friendly"
 			/>
 		</div>
