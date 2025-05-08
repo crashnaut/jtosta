@@ -6,30 +6,36 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  PROJECT_ID: tostamente
+  SERVICE_NAME: jtosta
+  REGION: us-central1
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: tostamente
+          project_id: ${{ env.PROJECT_ID }}
           service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Configure Docker
+      - name: Configure Docker for GCP
         run: gcloud auth configure-docker
 
-      - name: Build and Push Docker image
+      - name: Build and Push Container
         run: |
-          docker build -t gcr.io/tostamente/jtosta:${{ github.sha }} .
-          docker push gcr.io/tostamente/jtosta:${{ github.sha }}
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} .
+          docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy jtosta \
-            --image gcr.io/tostamente/jtosta:${{ github.sha }} \
-            --region us-central1 \
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
+            --region ${{ env.REGION }} \
             --platform managed \
             --allow-unauthenticated
