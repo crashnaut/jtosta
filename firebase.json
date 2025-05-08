@@ -11,7 +11,10 @@
     ],
     "rewrites": [{
       "source": "**",
-      "destination": "/index.html"
+      "run": {
+        "serviceId": "jtosta",
+        "region": "us-central1"
+      }
     }],
     "headers": [{
       "source": "**",

@@ -1,39 +1,35 @@
-name: Deploy to Firebase
+name: Deploy to Cloud Run
 
 on:
   push:
     branches:
       - main
-      - feature/sveltekit-migration
   workflow_dispatch:
 
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
         with:
-          node-version: 20
+          project_id: tostamente
+          service_account_key: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
+      - name: Configure Docker
+        run: gcloud auth configure-docker
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Build and Push Docker image
+        run: |
+          docker build -t gcr.io/tostamente/jtosta:${{ github.sha }} .
+          docker push gcr.io/tostamente/jtosta:${{ github.sha }}
 
-      - name: Build
-        run: pnpm build
-
-      - name: Deploy to Firebase
-        uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
-          projectId: tostamente
-          channelId: live
-          target: jtosta-com
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy jtosta \
+            --image gcr.io/tostamente/jtosta:${{ github.sha }} \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated
