@@ -8,6 +8,7 @@ on:
 
 env:
   PROJECT_ID: tostamente
+  PROJECT_NUMBER: 603102018157
   SERVICE_NAME: jtosta
   REGION: us-central1
 
@@ -25,8 +26,9 @@ jobs:
         name: Authenticate with Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/${{ env.PROJECT_ID }}/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider
-          service_account: github-deploy@${{ env.PROJECT_ID }}.iam.gserviceaccount.com
+          workload_identity_provider: projects/603102018157/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider
+          service_account: github-deploy@tostamente.iam.gserviceaccount.com
+          token_format: 'access_token'
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
