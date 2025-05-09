@@ -13,7 +13,30 @@ pnpm run dev
 
 # Build for production
 pnpm run build
+
+# Preview production build locally
+pnpm run preview
 ```
+
+## Deployment
+
+This site is deployed on Firebase Hosting. To deploy:
+
+```bash
+# Install Firebase CLI if you haven't already
+npm install -g firebase-tools
+
+# Login to Firebase
+firebase login
+
+# Build the site
+pnpm run build
+
+# Deploy to Firebase Hosting
+firebase deploy --only hosting:jtosta-com
+```
+
+The site will be deployed to https://jtosta-com.web.app/ and https://jtosta.com/ (if custom domain is configured).
 
 ## Structure
 
