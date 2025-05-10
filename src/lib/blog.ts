@@ -2,11 +2,19 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { dev } from '$app/environment';
 import type { BlogPost, BlogPostsResult } from './types/blog';
+import { marked } from 'marked';
 
 const POSTS_PER_PAGE = 6;
 
 // Cache for parsed blog posts to improve performance
 const postsCache = new Map<string, BlogPost>();
+
+// Configure marked options
+marked.setOptions({
+    gfm: true, // GitHub Flavored Markdown
+    breaks: true, // Convert line breaks to <br>
+    pedantic: false // Don't be strict about markdown spec
+});
 
 // Get the correct content directory path
 function getContentDirectory() {
@@ -21,7 +29,7 @@ function getContentDirectory() {
             readdirSync(path);
             return path;
         } catch (e) {
-            continue;
+            // Continue to the next path
         }
     }
     
@@ -49,7 +57,10 @@ function parseFrontmatter(content: string): Record<string, string> {
 function parsePost(filename: string, fileContent: string): BlogPost {
     const id = filename.replace('.md', '');
     const frontmatter = parseFrontmatter(fileContent);
-    const content = fileContent.slice(fileContent.indexOf('---\n', 4) + 4).trim();
+    const rawContent = fileContent.slice(fileContent.indexOf('---\n', 4) + 4).trim();
+    
+    // Convert markdown content to HTML using marked - ensure it returns a string
+    const content = marked.parse(rawContent).toString();
     
     return {
         id,
@@ -82,8 +93,9 @@ export async function getBlogPosts(page = 1): Promise<BlogPostsResult> {
             .filter(filename => filename.endsWith('.md'));
 
         const posts = filenames.map(filename => {
-            if (postsCache.has(filename)) {
-                return postsCache.get(filename)!;
+            const cachedPost = postsCache.get(filename);
+            if (cachedPost) {
+                return cachedPost;
             }
 
             const filePath = join(postsDirectory, filename);
@@ -113,8 +125,9 @@ export async function getBlogPost(id: string): Promise<BlogPost | null> {
         const filePath = join(postsDirectory, `${id}.md`);
         
         try {
-            if (postsCache.has(`${id}.md`)) {
-                return postsCache.get(`${id}.md`)!;
+            const cachedPost = postsCache.get(`${id}.md`);
+            if (cachedPost) {
+                return cachedPost;
             }
 
             const fileContent = readFileSync(filePath, 'utf-8');

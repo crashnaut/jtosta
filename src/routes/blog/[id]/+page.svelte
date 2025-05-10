@@ -31,8 +31,8 @@
 
 	<article class="container mx-auto px-4 py-12">
 		<header class="mb-8">
-			<h1 class="mb-4 text-4xl font-bold">{post.title}</h1>
-			<p class="mb-4 text-lg text-muted-foreground">{post.excerpt}</p>
+			<h1 class="mb-4 text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">{post.title}</h1>
+			<p class="mb-4 text-base lg:text-lg text-muted-foreground">{post.excerpt}</p>
 			<div class="flex items-center space-x-4">
 				<span class="text-sm text-muted-foreground">Por {post.author}</span>
 				<time class="text-sm text-muted-foreground" datetime={post.date}>

@@ -3,7 +3,7 @@ title: "Gerenciando a Ansiedade no Dia a Dia: Um Guia Prático"
 excerpt: "Descubra estratégias práticas e eficazes para lidar com a ansiedade no cotidiano, desde técnicas de respiração até mudanças simples no estilo de vida."
 author: "Jaqueline Tosta"
 date: "2025-05-07"
-imageUrl: "https://picsum.photos/800/400?random=1"
+imageUrl: "/photos/treat_anx.jpg"
 imageHint: "Pessoa praticando meditação em um ambiente calmo e natural"
 ---
 

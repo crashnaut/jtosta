@@ -3,7 +3,7 @@ title: "Desenvolvendo Inteligência Emocional: O Caminho para Relacionamentos Ma
 excerpt: "Aprenda como desenvolver sua inteligência emocional e melhorar suas relações interpessoais através de autoconhecimento e práticas diárias."
 author: "Jaqueline Tosta"
 date: "2025-05-01"
-imageUrl: "https://picsum.photos/800/400?random=2"
+imageUrl: "/photos/compentet.jpeg"
 imageHint: "Pessoas conversando e interagindo em um ambiente acolhedor"
 ---
 

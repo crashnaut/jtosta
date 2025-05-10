@@ -20,6 +20,14 @@ export default defineConfig({
 		include: ['mdsvex']
 	},
 	build: {
-		target: 'esnext'
+		target: 'esnext',
+		// Optimize asset caching by hashing assets and setting them to be immutable
+		assetsInlineLimit: 4096, // Only inline assets smaller than 4kb
+		rollupOptions: {
+			output: {
+				// Use content hashing for better caching
+				assetFileNames: 'assets/[name].[hash].[ext]',
+			}
+		}
 	}
 });
