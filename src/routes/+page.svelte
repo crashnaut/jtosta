@@ -14,10 +14,9 @@
 	<!-- Hero Section -->
 	<section class="relative h-[60vh] min-h-[400px] w-full">
 		<img
-			src="https://picsum.photos/1600/900"
-			alt="Paisagem calma e acolhedora"
+			src="/photos/jaque_header.jpeg"
+			alt="Jaqueline Tosta - Psicoterapia e Acolhimento"
 			class="absolute inset-0 h-full w-full object-cover brightness-75"
-			data-ai-hint="calm landscape nature"
 		/>
 		<div
 			class="absolute inset-0 flex flex-col items-center justify-center bg-black/30 p-4 text-center text-primary-foreground"
