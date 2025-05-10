@@ -16,7 +16,7 @@
 		<img
 			src="/photos/jaque_header.jpeg"
 			alt="Jaqueline Tosta - Psicoterapia e Acolhimento"
-			class="absolute inset-0 h-full w-full object-cover brightness-75"
+			class="absolute inset-0 h-full w-full object-cover object-top brightness-75"
 		/>
 		<div
 			class="absolute inset-0 flex flex-col items-center justify-center bg-black/30 p-4 text-center text-primary-foreground"
