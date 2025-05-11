@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { CheckCircle } from 'lucide-svelte';
 	import SEO from '$lib/components/seo.svelte';
+	import SocialIcons from '$lib/components/social-icons.svelte';
 	import { onMount } from 'svelte';
 
 	const whatsappLink = `https://wa.me/5562982653996?text=${encodeURIComponent('Olá, Jaqueline! Gostaria de saber mais sobre seus serviços.')}`;
@@ -87,12 +88,15 @@
 						<li>Pós-graduada em Neuropsicopedagogia</li>
 						<li>Pós-graduanda em Neuropsicologia e Gestalt-terapia no ITGT/PUC</li>
 					</ul>
-					<a
-						href="/sobre"
-						class="inline-flex items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80"
-					>
-						Saiba Mais Sobre Mim
-					</a>
+					
+					<div class="flex flex-col sm:flex-row sm:items-center gap-4">
+						<a
+							href="/sobre"
+							class="inline-flex items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80"
+						>
+							Saiba Mais Sobre Mim
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
