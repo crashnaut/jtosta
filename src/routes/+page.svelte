@@ -1,8 +1,28 @@
 <script lang="ts">
 	import { CheckCircle } from 'lucide-svelte';
 	import SEO from '$lib/components/seo.svelte';
+	import { onMount } from 'svelte';
 
 	const whatsappLink = `https://wa.me/5562982653996?text=${encodeURIComponent('Olá, Jaqueline! Gostaria de saber mais sobre seus serviços.')}`;
+	
+	// Instagram section is currently disabled
+	const showInstagramSection = false;
+	
+	// Handle Instagram feed script loading (commented out for now)
+	/* 
+	onMount(() => {
+		// Add Elfsight script
+		const script = document.createElement('script');
+		script.src = 'https://static.elfsight.com/platform/platform.js';
+		script.defer = true;
+		document.body.appendChild(script);
+		
+		return () => {
+			// Cleanup on component destroy
+			document.body.removeChild(script);
+		};
+	});
+	*/
 </script>
 
 <SEO
@@ -125,6 +145,32 @@
 			</div>
 		</div>
 	</section>
+
+	<!-- Instagram Feed Section - Hidden for now but preserved for future use -->
+	{#if showInstagramSection}
+	<section id="instagram-feed" class="py-16 md:py-24">
+		<div class="container mx-auto px-4 text-center">
+			<h2 class="mb-4 text-3xl font-semibold text-primary">Meu Instagram</h2>
+			<p class="mb-12 max-w-2xl mx-auto text-muted-foreground">
+				Acompanhe meu trabalho e receba dicas de bem-estar emocional diretamente do meu perfil.
+			</p>
+			
+			<!-- Elfsight Instagram Feed Widget -->
+			<div class="elfsight-app-instagram-feed" data-elfsight-app-lazy="true"></div>
+			
+			<div class="mt-8">
+				<a 
+					href="https://www.instagram.com/psi.jaquelinetosta_/"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center rounded-md bg-secondary px-6 py-2 text-sm font-medium text-secondary-foreground transition-colors hover:bg-secondary/80"
+				>
+					Ver mais no Instagram
+				</a>
+			</div>
+		</div>
+	</section>
+	{/if}
 
 	<!-- CTA Section -->
 	<section class="py-16 text-center md:py-24">
