@@ -3,6 +3,8 @@
   import '@fontsource-variable/inter';
   import { onMount } from 'svelte';
   import { page } from '$app/stores';
+  import { user, signOut } from '$lib/firebase/auth';
+  import { LogOut, Settings } from 'lucide-svelte';
 
   let isMobileMenuOpen = false;
   let dialogContainer: HTMLDivElement;
@@ -31,6 +33,14 @@
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
       isMobileMenuOpen = false;
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error signing out:', error);
     }
   };
 
@@ -92,6 +102,22 @@
       window.open(webUrl, '_blank', 'noopener,noreferrer');
     }
   }
+
+  // Function to handle profile photo click
+  function handleProfileClick() {
+    // For now, this will be a placeholder for future functionality
+    // In a future implementation, this could open a dialog to change the profile photo
+    console.log('Profile photo clicked');
+  }
+
+  function getInitials(name: string | null | undefined) {
+    if (!name) return '?';
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
+  }
+
+  function getPhotoUrl(user: any) {
+    return user?.photoURL || null;
+  }
 </script>
 
 <svelte:head>
@@ -113,16 +139,58 @@
       </a>
 
       <!-- Desktop Navigation -->
-      <nav class="hidden md:flex items-center space-x-6">
-        {#each navItems as item}
+      <nav class="hidden md:flex items-center gap-8">
+        <div class="flex items-center space-x-6">
+          {#each navItems as item}
+            <a
+              href={item.href}
+              class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              class:text-primary={$page.url.pathname === item.href}
+            >
+              {item.label}
+            </a>
+          {/each}
+        </div>
+        
+        <!-- Login/Logout Button -->
+        {#if $user}
+          <div class="flex items-center gap-3">
+            <button
+              on:click={handleProfileClick}
+              class="flex items-center justify-center h-9 w-9 rounded-full bg-muted overflow-hidden hover:ring-2 hover:ring-primary transition-all"
+              aria-label="Perfil do usuário - Clique para alterar foto"
+              title="Clique para alterar foto de perfil"
+            >
+              {#if getPhotoUrl($user)}
+                <img 
+                  src={getPhotoUrl($user)} 
+                  alt={$user.displayName || 'Perfil do usuário'} 
+                  class="h-full w-full object-cover"
+                />
+              {:else}
+                <span class="text-sm font-medium">
+                  {getInitials($user.displayName || $user.email?.split('@')[0])}
+                </span>
+              {/if}
+            </button>
+            
+            <button
+              on:click={handleLogout}
+              class="flex items-center justify-center h-9 w-9 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+              aria-label="Sair da conta"
+              title="Sair da conta"
+            >
+              <LogOut class="h-4 w-4" />
+            </button>
+          </div>
+        {:else}
           <a
-            href={item.href}
-            class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            class:text-primary={$page.url.pathname === item.href}
+            href="/auth"
+            class="inline-flex h-9 px-4 items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
           >
-            {item.label}
+            Entrar
           </a>
-        {/each}
+        {/if}
       </nav>
 
       <!-- Mobile Menu Button -->
@@ -161,7 +229,7 @@
       <!-- Menu Content -->
       <div 
         bind:this={dialogContainer}
-        class="fixed inset-y-0 right-0 w-[250px] border-l bg-white p-6 shadow-lg transition ease-in-out dark:bg-white"
+        class="fixed inset-y-0 right-0 w-[250px] border-l bg-white p-6 shadow-lg transition ease-in-out dark:bg-white flex flex-col"
         on:click|stopPropagation={() => {}}
         on:keydown={trapFocus}
         tabindex="0"
@@ -169,6 +237,7 @@
         aria-orientation="vertical"
         aria-label="Menu de navegação"
       >
+        <!-- Header with close button -->
         <div class="flex items-center justify-between">
           <a href="/" class="text-xl font-bold text-primary" on:click={() => (isMobileMenuOpen = false)}>
             J. Tosta
@@ -184,6 +253,7 @@
           </button>
         </div>
 
+        <!-- Navigation links -->
         <nav class="mt-6 flex flex-col space-y-4">
           {#each navItems as item}
             <a
@@ -195,24 +265,47 @@
               {item.label}
             </a>
           {/each}
-          
-          <!-- Social Media Icons in Mobile Menu -->
-          <div class="pt-4 mt-4 border-t border-border flex space-x-3">
-            {#each socialLinks as social}
-              <a 
-                href={social.webUrl}
-                on:click={(e) => {
-                  handleSocialClick(e, social.appUrl, social.webUrl);
-                  isMobileMenuOpen = false;
-                }}
-                class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-muted hover:bg-accent hover:text-accent-foreground transition-colors"
-                aria-label={social.name}
-              >
-                {@html social.icon}
-              </a>
-            {/each}
-          </div>
         </nav>
+        
+        <!-- Social Media Icons -->
+        <div class="mt-8 pt-4 border-t border-border flex space-x-3">
+          {#each socialLinks as social}
+            <a 
+              href={social.webUrl}
+              on:click={(e) => {
+                handleSocialClick(e, social.appUrl, social.webUrl);
+                isMobileMenuOpen = false;
+              }}
+              class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-muted hover:bg-accent hover:text-accent-foreground transition-colors"
+              aria-label={social.name}
+            >
+              {@html social.icon}
+            </a>
+          {/each}
+        </div>
+        
+        <!-- Login/Logout Button with more spacing -->
+        <div class="mt-8">
+          {#if $user}
+            <button
+              on:click={() => {
+                handleLogout();
+                isMobileMenuOpen = false;
+              }}
+              class="w-full inline-flex h-9 px-4 items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            >
+              Sair
+            </button>
+          {:else}
+            <a
+              href="/auth"
+              class="w-full inline-flex h-9 px-4 items-center justify-center rounded-md bg-primary text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+              on:click={() => (isMobileMenuOpen = false)}
+            >
+              Entrar
+            </a>
+          {/if}
+        </div>
       </div>
     </div>
   {/if}
