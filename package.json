@@ -10,7 +10,11 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"deploy": "npm run build && firebase deploy",
+		"deploy:prod": "npm run build && firebase deploy --only hosting:production",
+		"deploy:staging": "npm run build && firebase deploy --only hosting:staging",
+		"promote-to-prod": "firebase hosting:clone tostamente:live jtosta-com:live"
 	},
 	"dependencies": {
 		"@fontsource/inter": "^5.2.5",

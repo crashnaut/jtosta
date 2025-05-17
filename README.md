@@ -20,7 +20,10 @@ pnpm run preview
 
 ## Deployment
 
-This site is deployed on Firebase Hosting. To deploy:
+This site uses a staging-to-production deployment workflow with Firebase Hosting:
+
+- **Staging Environment**: https://tostamente.web.app/
+- **Production Environment**: https://jtosta-com.web.app/ and https://jtosta.com/
 
 ```bash
 # Install Firebase CLI if you haven't already
@@ -29,14 +32,24 @@ npm install -g firebase-tools
 # Login to Firebase
 firebase login
 
-# Build the site
-pnpm run build
+# Deploy to staging (default)
+npm run deploy
+# or simply
+firebase deploy
 
-# Deploy to Firebase Hosting
-firebase deploy --only hosting:jtosta-com
+# Test the staging site at https://tostamente.web.app/
+
+# When ready, promote staging to production
+npm run promote-to-prod
+
+# If needed, deploy directly to production
+npm run deploy:prod
 ```
 
-The site will be deployed to https://jtosta-com.web.app/ and https://jtosta.com/ (if custom domain is configured).
+The workflow is designed to:
+1. Deploy changes to staging first for stakeholder review
+2. Promote to production once approved without rebuilding
+3. Allow direct production deployment when needed
 
 ## Structure
 

@@ -1,54 +1,111 @@
 {
-  "hosting": {
-    "site": "jtosta-com",
-    "public": "build",
-    "cleanUrls": true,
-    "trailingSlash": false,
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [{
-      "source": "**",
-      "destination": "/index.html"
-    }],
-    "headers": [
-      {
-        "source": "**/*.html",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }]
-      },
-      {
-        "source": "**/*.json",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }]
-      },
-      {
-        "source": "**/_app/**",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }]
-      },
-      {
-        "source": "**/photos/**",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }]
-      },
-      {
-        "source": "**/*.{jpg,jpeg,png,gif,webp,svg,ico}",
-        "headers": [{
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }]
-      }
-    ]
-  }
+  "hosting": [
+    {
+      "target": "production",
+      "site": "jtosta-com",
+      "public": "build",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [{
+        "source": "**",
+        "destination": "/index.html"
+      }],
+      "headers": [
+        {
+          "source": "**/*.html",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }]
+        },
+        {
+          "source": "**/*.json",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }]
+        },
+        {
+          "source": "**/_app/**",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }]
+        },
+        {
+          "source": "**/photos/**",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }]
+        },
+        {
+          "source": "**/*.{jpg,jpeg,png,gif,webp,svg,ico}",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }]
+        }
+      ]
+    },
+    {
+      "target": "staging",
+      "site": "tostamente",
+      "public": "build",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [{
+        "source": "**",
+        "destination": "/index.html"
+      }],
+      "headers": [
+        {
+          "source": "**/*.html",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }]
+        },
+        {
+          "source": "**/*.json",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "no-cache, no-store, must-revalidate"
+          }]
+        },
+        {
+          "source": "**/_app/**",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }]
+        },
+        {
+          "source": "**/photos/**",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }]
+        },
+        {
+          "source": "**/*.{jpg,jpeg,png,gif,webp,svg,ico}",
+          "headers": [{
+            "key": "Cache-Control",
+            "value": "public, max-age=31536000, immutable"
+          }]
+        }
+      ]
+    }
+  ],
+  "hosting:target": "staging"
 }

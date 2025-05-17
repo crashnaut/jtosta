@@ -5,8 +5,11 @@
   "targets": {
     "tostamente": {
       "hosting": {
-        "jtosta-com": [
+        "production": [
           "jtosta-com"
+        ],
+        "staging": [
+          "tostamente"
         ]
       }
     }
