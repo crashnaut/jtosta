@@ -9,6 +9,7 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { getPostStats } from '$lib/firebase/post-stats';
+	import { marked } from 'marked';
 
 	export let data: PageData;
 	
@@ -16,6 +17,33 @@
 		likeCount: Math.max(0, data.post.likeCount || 0),
 		commentCount: Math.max(0, data.post.commentCount || 0)
 	};
+	
+	// Process markdown content
+	let formattedContent = '';
+	let isContentLoading = true;
+	
+	// Function to process markdown safely
+	async function processMarkdown(content: string): Promise<string> {
+		try {
+			const result = await marked.parse(content);
+			return result.toString();
+		} catch (error) {
+			console.error('Error processing markdown:', error);
+			return content; // Return original content on error
+		}
+	}
+	
+	// Process the content immediately and when component mounts
+	async function initContent() {
+		if (data.post) {
+			isContentLoading = true;
+			formattedContent = await processMarkdown(data.post.content);
+			isContentLoading = false;
+		}
+	}
+	
+	// Initialize content processing
+	initContent();
 	
 	onMount(async () => {
 		if (browser) {
@@ -83,8 +111,14 @@
 			/>
 		</div>
 
-		<div class="prose prose-lg mx-auto max-w-3xl dark:prose-invert">
-			{@html post.content}
+		<div class="prose prose-lg prose-headings:text-primary prose-headings:font-semibold prose-a:text-primary prose-a:underline hover:prose-a:text-primary/80 mx-auto max-w-3xl dark:prose-invert dark:prose-headings:text-primary-foreground dark:prose-a:text-primary-foreground">
+			{#if isContentLoading}
+				<div class="flex justify-center py-8">
+					<LoadingSpinner />
+				</div>
+			{:else}
+				{@html formattedContent}
+			{/if}
 		</div>
 
 		<div class="mt-8 border-t pt-8">
