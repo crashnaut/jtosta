@@ -2,7 +2,6 @@
   "hosting": [
     {
       "target": "production",
-      "site": "jtosta-com",
       "public": "build",
       "cleanUrls": true,
       "trailingSlash": false,
@@ -55,7 +54,6 @@
     },
     {
       "target": "staging",
-      "site": "tostamente",
       "public": "build",
       "cleanUrls": true,
       "trailingSlash": false,

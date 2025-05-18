@@ -14,7 +14,10 @@
 		"deploy": "npm run build && firebase deploy",
 		"deploy:prod": "npm run build && firebase deploy --only hosting:production",
 		"deploy:staging": "npm run build && firebase deploy --only hosting:staging",
-		"promote-to-prod": "firebase hosting:clone tostamente:live jtosta-com:live"
+		"promote-to-prod": "firebase hosting:clone tostamente:live jtosta-com:live",
+		"migrate-blogs": "node --loader ts-node/esm src/lib/scripts/migrate-blogs.ts",
+		"blog-manager": "node --loader ts-node/esm src/lib/scripts/blog-manager.ts",
+		"count-comments": "node --loader ts-node/esm src/lib/scripts/count-comments.js"
 	},
 	"dependencies": {
 		"@fontsource/inter": "^5.2.5",
@@ -36,12 +39,14 @@
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@tailwindcss/forms": "^0.5.7",
 		"@tailwindcss/typography": "^0.5.10",
+		"@types/inquirer": "^9.0.8",
 		"@typescript-eslint/eslint-plugin": "^7.0.0",
 		"@typescript-eslint/parser": "^7.0.0",
 		"autoprefixer": "^10.4.17",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
+		"inquirer": "^12.6.1",
 		"mdsvex": "^0.12.5",
 		"postcss": "^8.4.35",
 		"prettier": "^3.1.1",
@@ -51,6 +56,7 @@
 		"svelte": "^5.0.0-next.1",
 		"svelte-check": "^4.1.7",
 		"tailwindcss": "^3.4.1",
+		"ts-node": "^10.9.2",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vite": "^6.3.5"
