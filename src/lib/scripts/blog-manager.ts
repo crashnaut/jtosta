@@ -6,29 +6,37 @@ import matter from 'gray-matter';
 import { prompt } from 'inquirer';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, getDoc, doc, setDoc, serverTimestamp } from 'firebase/firestore';
+import dotenv from 'dotenv';
 
-// Firebase configuration - use your existing config
+// Load environment variables from .env file
+dotenv.config();
+
+// Firebase configuration from environment variables or use fallback values
 const firebaseConfig = {
-  apiKey: "AIzaSyDS-i6M1SBFHqodsulJ0IYeUn3OYODlHRA",
-  authDomain: "tostamente.firebaseapp.com",
-  projectId: "tostamente",
-  storageBucket: "tostamente.firebasestorage.app",
-  messagingSenderId: "603102018157",
-  appId: "1:603102018157:web:3fe1f03c4ccd61ed935d64"
+  apiKey: process.env.PUBLIC_FIREBASE_API_KEY || "AIzaSyDS-i6M1SBFHqodsulJ0IYeUn3OYODlHRA",
+  authDomain: process.env.PUBLIC_FIREBASE_AUTH_DOMAIN || "tostamente.firebaseapp.com",
+  projectId: process.env.PUBLIC_FIREBASE_PROJECT_ID || "tostamente",
+  storageBucket: process.env.PUBLIC_FIREBASE_STORAGE_BUCKET || "tostamente.firebasestorage.app",
+  messagingSenderId: process.env.PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "603102018157",
+  appId: process.env.PUBLIC_FIREBASE_APP_ID || "1:603102018157:web:3fe1f03c4ccd61ed935d64"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// Constants for file paths
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const contentDir = path.join(__dirname, '../../content/blog');
 const templatePath = path.join(__dirname, '../templates/blog-template.md');
 
-// Create the templates directory if it doesn't exist
+// Create directories if they don't exist
 const templatesDir = path.join(__dirname, '../templates');
 if (!fs.existsSync(templatesDir)) {
   fs.mkdirSync(templatesDir, { recursive: true });
+}
+if (!fs.existsSync(contentDir)) {
+  fs.mkdirSync(contentDir, { recursive: true });
 }
 
 // Blog post template
