@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import { user } from '$lib/firebase/auth';
   import { likePost, unlikePost, hasUserLikedPost, getLikeCount } from '$lib/firebase/likes';
+  import { openAuthModal } from '$lib/stores/auth-modal';
   
   export let postId: string;
   
@@ -33,7 +34,8 @@
   
   async function toggleLike() {
     if (!$user) {
-      window.location.href = '/auth';
+      // Open auth modal instead of redirecting
+      openAuthModal(window.location.pathname);
       return;
     }
     

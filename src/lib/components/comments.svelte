@@ -4,6 +4,7 @@
   import { getComments, addComment, deleteComment, editComment } from '$lib/firebase/comments';
   import type { Comment } from '$lib/types/blog';
   import LoadingSpinner from './loading-spinner.svelte';
+  import { openAuthModal } from '$lib/stores/auth-modal';
 
   export let postId: string;
   
@@ -214,7 +215,13 @@
   {:else}
     <div class="mb-8 p-4 bg-muted rounded-lg">
       <p class="text-center">
-        <a href="/auth" class="text-primary hover:underline">Faça login</a> para deixar um comentário.
+        <button 
+          on:click={() => openAuthModal(window.location.pathname)}
+          class="text-primary hover:underline focus:outline-none focus:underline"
+        >
+          Faça login
+        </button> 
+        para deixar um comentário.
       </p>
     </div>
   {/if}

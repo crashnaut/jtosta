@@ -3,6 +3,7 @@
 	import SEO from '$lib/components/seo.svelte';
 	import { user } from '$lib/firebase/auth';
 	import { onMount } from 'svelte';
+	import { openAuthModal } from '$lib/stores/auth-modal';
 
 	const whatsappLink = `https://wa.me/5562982653996?text=${encodeURIComponent('Olá, Jaqueline! Gostaria de marcar uma conversa.')}`;
 
@@ -310,12 +311,12 @@
 						<p class="mb-4">
 							O formulário de contato por email está disponível apenas para usuários autenticados.
 						</p>
-						<a
-							href="/auth"
+						<button
+							on:click={() => openAuthModal(location.pathname)}
 							class="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
 						>
 							Fazer Login
-						</a>
+						</button>
 						<p class="mt-4 text-sm">Ou utilize o WhatsApp para contato imediato.</p>
 					</div>
 				{/if}
