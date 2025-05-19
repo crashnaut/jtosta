@@ -138,18 +138,16 @@
   <div 
     class="fixed inset-0 z-50 flex items-center justify-center p-4"
     transition:fade={{ duration: 150 }}
-    on:click={handleOutsideClick}
-    on:keydown={handleKeydown}
     role="dialog"
-    aria-modal="true"
     aria-labelledby="auth-modal-title"
+    tabindex="0"
   >
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" aria-hidden="true"></div>
+    <!-- Backdrop -->
+    <div class="fixed inset-0 bg-black/50" on:click={handleClose}></div>
     
     <!-- Modal Content -->
     <div 
-      class="relative w-full max-w-md rounded-lg border bg-card p-6 shadow-lg animate-in fade-in zoom-in-95 duration-200"
+      class="relative z-10 w-full max-w-md rounded-lg bg-white p-6 shadow-lg"
     >
       <!-- Close button -->
       <button 

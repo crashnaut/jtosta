@@ -7,6 +7,7 @@
   import { LogOut, Settings } from 'lucide-svelte';
   import AuthModal from '$lib/components/auth-modal.svelte';
   import { authModalOpen, authReturnUrl, openAuthModal } from '$lib/stores/auth-modal';
+  import { isAdmin } from '$lib/stores/admin';
 
   let isMobileMenuOpen = false;
   let dialogContainer: HTMLDivElement;
@@ -17,6 +18,9 @@
     { href: "/blog", label: "Blog" },
     { href: "/contato", label: "Contato" }
   ];
+  
+  // Admin navigation item - will be conditionally added
+  const adminItem = { href: "/admin", label: "Admin" };
 
   // Social media links
   const socialLinks = [
@@ -152,6 +156,17 @@
               {item.label}
             </a>
           {/each}
+          
+          <!-- Admin link in desktop navigation, only shown to admin users -->
+          {#if $isAdmin}
+            <a
+              href={adminItem.href}
+              class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              class:text-primary={$page.url.pathname.startsWith(adminItem.href)}
+            >
+              {adminItem.label}
+            </a>
+          {/if}
         </div>
         
         <!-- Login/Logout Button -->
@@ -267,6 +282,18 @@
               {item.label}
             </a>
           {/each}
+
+          <!-- Admin link, shown only to admins -->
+          {#if $isAdmin}
+            <a
+              href={adminItem.href}
+              class="text-lg font-medium text-foreground transition-colors hover:text-primary focus:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-ring rounded-md px-2 py-1"
+              class:text-primary={$page.url.pathname.startsWith(adminItem.href)}
+              on:click={() => (isMobileMenuOpen = false)}
+            >
+              {adminItem.label}
+            </a>
+          {/if}
         </nav>
         
         <!-- Social Media Icons -->

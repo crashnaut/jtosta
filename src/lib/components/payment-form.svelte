@@ -5,7 +5,7 @@
   export let amount: number = 0;
   export let description: string = '';
   export let buttonText: string = 'Pagar';
-  export let successRedirect: string = '/pagamento-sucesso';
+  const successRedirect: string = '/pagamento-sucesso';
   
   const dispatch = createEventDispatcher();
   let loading = false;
